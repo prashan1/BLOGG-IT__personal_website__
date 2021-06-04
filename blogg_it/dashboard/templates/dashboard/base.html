@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %} {% endblock title%}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="#">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'dashboard/main.css'  %}">
+	<script type='text/javascript' src='{% static "dashboard/main.js" %}'>
+	</script>
+</head>
+	<body >
+		<nav class="navbar navbar-light ">
+			<div style='display:contents; ;justify-content:space-between;' >
+				<div>
+						<a class="nav-link text-white" href="{% url 'home' %}" style='font-weight: 700;font-size: x-large;font-style: italic;'>bLoG iT!!</a>
+				</div>
+				<div '>
+						{% if  request.user.is_authenticated %}
+							<button class="btn  bg-dark   my-2 my-sm-0 " type="submit" ><a class='text-white' href="{% url 'logout' %}">Logout</a> </button>
+						{% else %}
+						<button class="btn  bg-dark  my-2 my-sm-0 " type="submit"><a class='text-white' href="{% url 'register' %}">Register</a></button>
+						<button class="btn  bg-dark   my-2 my-sm-0" type="submit"><a  class='text-white' href="{% url 'login' %}">Login</a></button>
+						{% endif %}
+				</div>
+			</div>
+		</nav>
+
+		<div class='container' style='max-width: 95%'>
+
+			<div class="nav flex-column nav-pills mw-50 left-side " style='margin-right:50px ' aria-orientation="vertical">
+				<p class="font-weight-bold mw-100" style='  font-family: auto;  font-size: xx-large;margin-bottom: -3px'>Prashant Bisht</p>
+				<small style='font-variant-caps: small-caps;  font-weight: 600; margin-top: -1px; font-size: 13px;margin-bottom: 20px;'>Software Engineer</small>
+				<small style='font-variant-caps: small-caps;  font-weight: 600;  font-size: 13px;margin-bottom: 20px;'>
+				Community about web development, Machine learning, Python, and many more..</small>
+				<a class="nav-link active mw-10"  style='margin-bottom:20px;text-align: center; '' href="{% url 'home' %}" >Home</a>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle btn-block" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						All threads
+						</button>
+						<div class="dropdown-menu " aria-labelledby="dropdownMenu2" >
+						{% for t in threads %}
+						<a class="dropdown-item " href='{% url "post-detail" t.pk %}'>{{t}}</a>
+						{% endfor %}
+						</div>
+					</div>
+					<div class="dropdown">
+						<button class="btn  btn-primary dropdown-toggle btn-block" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						Contact Me
+						</button>
+						<div class="dropdown-menu " aria-labelledby="dropdownMenu2" >
+							<a  class="dropdown-item btn-block" href="https://www.linkedin.com/in/prashant-bisht-0b1a7b194/" target="_blank">
+								<i class="fa fa-linkedin w3-hover-opacity "></i><small> LinkedIN</small></a>
+								<a  class="dropdown-item btn-block" href="https://github.com/prashan1" > <i class="fa fa-github w3-hover-opacity" ></i><small> Github</small></a>
+
+								<a  class="dropdown-item btn-block " href="https://www.linkedin.com/in/prashant-bisht-0b1a7b194/" target="_blank">
+								<i class="fa fa-twitter w3-hover-opacity"></i><small> Twitter</small></a>
+								
+						</div>
+					</div>
+				<a class="nav-link active mw-10"  style='text-align: center;'  href="{% url 'about' %}" >About</a>
+
+			</div>
+
+			<div class='middle_section'>
+				<nav aria-label="breadcrumb mw-100" style='max-width: 85%;'>
+					<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+					<li class="breadcrumb-item active" aria-current="page">{% block navlink %}{% endblock navlink %}</li>
+					</ol>
+				</nav>
+				{% block content %}{% endblock content %}
+			</div>
+
+			<div class='right_sidebar'>
+				{% if not creation %}
+					<div class='creation'>
+						{% block creation %}{% endblock creation %}
+					</div>
+				{% endif %}
+				<div style='max-width: 363px ' >	   
+					{% for post in latestPosts %}
+						<div  style=' background-color:white ;padding: 12px;margin: -3px 12px; border-top:outset ;border-radius: 14px;'>
+							<div style='font-size:oblique'>
+								<a href='{% url "post-detail" post.belongs_to_thread_id %}' >{{post.belongs_to_thread}}</a>
+							</div>
+							<div class='topic' style=' font-size: small; font-weight: 400;  color: #007bff;'>
+								<a href='{% url "inner-post" post.pk %}' >{{post}}</a>
+							</div>
+							<div class='body' style='margin-top:2px'>
+								<p style='color: #212529 ;text-decoration: none; color: #212529;'>{{post.description | truncatechars:35}}
+								</p>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			
+		</div>
+
+		<footer class="w3-center w3-black w3-padding-10" style='margin-bottom: -30px;margin-top: 240px'>
+				<h5 ><b>contacts<b></h5>
+				<div class="w3-xlarge w3-section" style='margin-top: 200px'>
+					<a href="https://www.linkedin.com/in/prashant-bisht-0b1a7b194/" target="_blank">
+					<i class="fa fa-linkedin w3-hover-opacity "></i></a>&emsp;
+					<a href="https://www.linkedin.com/in/prashant-bisht-0b1a7b194/" target="_blank">
+					<i class="fa fa-twitter w3-hover-opacity"></i></a>&emsp;
+					<a href="https://github.com/prashan1" > <i class="fa fa-github w3-hover-opacity" ></i></a>&emsp; 
+					<i class="fa fa-facebook-official w3-hover-opacity"></i>&emsp;
+					<i class="fa fa-instagram w3-hover-opacity"></i>&emsp;
+				</div>
+		</footer>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" ></script>
+	</body>
+</html>
