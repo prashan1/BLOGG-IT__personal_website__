@@ -1,0 +1,14 @@
+{% extends 'dashboard/base.html' %}
+{% block title %} Home {% endblock title %}
+{% block content %}     
+<h3><strong><a href='{% url "post-detail" object.belongs_to_thread_id %}' >{{object.belongs_to_thread}}</a></strong></h3>
+			<div class='post-detail'>
+				{% autoescape off %}
+				{{object.description}}
+				{% endautoescape %}
+			</div>
+			<button type='Submit' class='btn-hero'> <a href='{% url "delete-post" object.pk %}'>Delete</a></button>
+
+			<button type='Submit' class='btn-hero'> <a href='{% url "update-post" object.pk %}'>Update</a></button>
+
+{% endblock content %}
