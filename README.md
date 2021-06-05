@@ -2,7 +2,6 @@
 ## It's a full stack blog application with almost all the functionality of 'creating' , deleting, updating, liking a post by multiple users just like a community
 
 ![](https://media.giphy.com/media/qUrQswDNmrhOmEJySI/giphy.gif)
-'heyey'
  ## The idea was to build blogging platform based on various exciting topics such as AI, Python, Django, Music, Learning, Resources, etc.</p>
   
 
